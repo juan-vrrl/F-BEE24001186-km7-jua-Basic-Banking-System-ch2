@@ -24,11 +24,11 @@ class BankAccount {
     return new Promise((resolve, reject) => { // penggunaan Promise untuk menghandle proses async dan error handling
       const tambah = parseFloat(amount);
       if (!isNaN(tambah) && tambah > 0) {
-        // Proses penambahan saldo akan dijalankan setelah 2 detik, penerapan konsep asynchronous menggunakan setTimeout
+        // Proses penambahan saldo akan dijalankan setelah 3 detik, penerapan konsep asynchronous menggunakan setTimeout
         setTimeout(() => {
           this._saldo += tambah; 
           resolve(`Saldo berhasil ditambahkan. Saldo saat ini: Rp${this._checkBalance()}`);
-        }, 2000); 
+        }, 3000); 
       } else {
         reject("Masukkan jumlah yang valid.");
       }
@@ -49,16 +49,17 @@ class RegularAccount extends BankAccount {
     return new Promise((resolve, reject) => {
       const kurang = parseFloat(amount);
       if (!isNaN(kurang) && kurang > 0) {
-        if (kurang > 100000) {
-          reject("Tidak dapat menarik saldo lebih dari Rp100.000 pada akun Regular.");
-        } else if (kurang <= this._saldo) {
-          setTimeout(() => {
+        // Delay 3 detik sebelum melakukan pengecekan saldo
+        setTimeout(() => {
+          if (kurang > 100000) {
+            reject("Tidak dapat menarik saldo lebih dari Rp100.000 pada akun Regular.");
+          } else if (kurang <= this._saldo) {
             this._saldo -= kurang;
             resolve(`Saldo berhasil ditarik. Saldo saat ini: Rp${this._checkBalance()}`);
-          }, 2000); // Delay 2 detik
-        } else {
-          reject("Saldo tidak mencukupi.");
-        }
+          } else {
+            reject("Saldo tidak mencukupi.");
+          }
+        }, 3000); // Delay 3 detik
       } else {
         reject("Masukkan jumlah yang valid.");
       }
@@ -74,14 +75,15 @@ class PremiumAccount extends BankAccount {
     return new Promise((resolve, reject) => {
       const kurang = parseFloat(amount);
       if (!isNaN(kurang) && kurang > 0) {
-        if (kurang <= this._saldo) {
-          setTimeout(() => {
+        // Delay 3 detik sebelum melakukan pengecekan saldo
+        setTimeout(() => {
+          if (kurang <= this._saldo) {
             this._saldo -= kurang;
             resolve(`Saldo berhasil ditarik. Saldo saat ini: Rp${this._checkBalance()}`);
-          }, 2000); // Delay 2 detik
-        } else {
-          reject("Saldo tidak mencukupi.");
-        }
+          } else {
+            reject("Saldo tidak mencukupi.");
+          }
+        }, 3000); // Delay 3 detik
       } else {
         reject("Masukkan jumlah yang valid.");
       }
