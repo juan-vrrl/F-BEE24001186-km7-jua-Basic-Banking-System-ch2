@@ -1,112 +1,92 @@
 // Juan Verrel Tanuwijaya
 
-const readline = require("readline");
+// File ini berguna dalam menyediakan class BankAccount, RegularAccount, dan PremiumAccount yang akan digunakan di file banking_system.js
+// Class BankAccount adalah abstract class yang memiliki method deposit dan withdraw, method withdraw akan di override di subclass RegularAccount dan PremiumAccount
+// Class RegularAccount dan PremiumAccount adalah subclass dari BankAccount, RegularAccount memiliki batasan penarikan saldo maksimal Rp100.000, sedangkan PremiumAccount tidak memiliki batasan
 
+// Abstract class BankAccount, penerapan konsep Abstraction dalam oop
 class BankAccount {
   constructor(nama) {
-    this.saldo = 0;
+    if (new.target === BankAccount) {
+      throw new Error("Abstract Class tidak boleh diinisiasi!");
+    }
+    this._saldo = 0; // atribut protected, penerapan konsep Encapsulation dalam oop
     this.nama = nama;
   }
 
-  // Fungsi untuk mengambil input dari user
-  getUserInput(question) {
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-
-    return new Promise((resolve) => {
-      rl.question(question, (answer) => {
-        rl.close();
-        resolve(answer);
-      });
-    });
+  // Method protected, penerapan konsep Encapsulation dalam oop 
+  _checkBalance() {
+    return this._saldo;
   }
 
   // Method untuk menambahkan jumlah saldo 
-  tambahSaldo() {
-    return new Promise((resolve, reject) => {
-      this.getUserInput("Masukkan jumlah saldo yang ingin ditambahkan: ")
-        .then((input) => {
-          const tambah = parseFloat(input);
-
-          if (!isNaN(tambah) && tambah > 0) {
-            this.saldo += tambah;
-            resolve(`Saldo berhasil ditambahkan. Saldo saat ini: Rp${this.saldo}`);
-          } else {
-            reject("Masukkan jumlah yang valid."); 
-          }
-        })
-    });
-  }
-
-  // Method untuk mengurangi jumlah saldo 
-  kurangiSaldo() {
-    return new Promise((resolve, reject) => {
-      this.getUserInput("Masukkan jumlah saldo yang ingin dikurangi: ")
-        .then((input) => {
-          const kurang = parseFloat(input);
-
-          if (!isNaN(kurang) && kurang > 0) {
-            if (kurang <= this.saldo) {
-              this.saldo -= kurang;
-              resolve(`Saldo berhasil dikurangi. Saldo saat ini: Rp${this.saldo}`);
-            } else {
-              reject("Saldo tidak mencukupi."); 
-            }
-          } else {
-            reject("Masukkan jumlah yang valid."); 
-          }
-        })
-    });
-  }
-}
-
-const akun = new BankAccount("Juan");
-
-function main() {
-  akun
-    .getUserInput(
-      `\nHalo ${akun.nama}, Saldo kamu saat ini : Rp${akun.saldo}\nPilih menu:\n1. Tambah saldo\n2. Kurangi saldo\n3. Keluar\nMasukkan pilihan Anda: `
-    )
-    .then((input) => {
-      const pilihan = parseInt(input);
-
-      switch (pilihan) {
-        case 1:
-          return akun
-            .tambahSaldo()
-            .then((message) => {
-              console.log(message);
-              return main();
-            })
-            .catch((err) => {
-              console.log(`Error: ${err}`);
-              return main(); 
-            });
-        case 2:
-          return akun
-            .kurangiSaldo()
-            .then((message) => {
-              console.log(message); 
-              return main();
-            })
-            .catch((err) => {
-              console.log(`Error: ${err}`); 
-              return main(); 
-            });
-        case 3:
-          console.log("Terima kasih!");
-          break;
-        default:
-          console.log("Pilihan tidak valid.");
-          return main(); 
+  deposit(amount) {
+    return new Promise((resolve, reject) => { // penggunaan Promise untuk menghandle proses async dan error handling
+      const tambah = parseFloat(amount);
+      if (!isNaN(tambah) && tambah > 0) {
+        // Proses penambahan saldo akan dijalankan setelah 2 detik, penerapan konsep asynchronous menggunakan setTimeout
+        setTimeout(() => {
+          this._saldo += tambah; 
+          resolve(`Saldo berhasil ditambahkan. Saldo saat ini: Rp${this._checkBalance()}`);
+        }, 2000); 
+      } else {
+        reject("Masukkan jumlah yang valid.");
       }
-    })
-    .catch((err) => {
-      console.log("Terjadi kesalahan.", err);
     });
+  }
+
+  // Method untuk mengurangi jumlah saldo, akan di override di subclass, penerapan dari konsep Polymorphism dalam oop (method yang sama dengan fungsi yang berbeda)
+  withdraw(amount) {
+    throw new Error("withdraw harus diimplementasikan di subclass.");
+  }
 }
 
-// Menjalankan aplikasi
-main();
+// Class untuk Regular Account (inherit dari BankAccount), penerapan konsep Inheritance dalam oop
+class RegularAccount extends BankAccount {
+
+  // Method override dari parent class BankAccount, penerapan konsep Polymorphism dalam oop
+  withdraw(amount) {
+    return new Promise((resolve, reject) => {
+      const kurang = parseFloat(amount);
+      if (!isNaN(kurang) && kurang > 0) {
+        if (kurang > 100000) {
+          reject("Tidak dapat menarik saldo lebih dari Rp100.000 pada akun Regular.");
+        } else if (kurang <= this._saldo) {
+          setTimeout(() => {
+            this._saldo -= kurang;
+            resolve(`Saldo berhasil ditarik. Saldo saat ini: Rp${this._checkBalance()}`);
+          }, 2000); // Delay 2 detik
+        } else {
+          reject("Saldo tidak mencukupi.");
+        }
+      } else {
+        reject("Masukkan jumlah yang valid.");
+      }
+    });
+  }
+}
+
+// Class untuk Premium Account (inherit dari BankAccount)
+class PremiumAccount extends BankAccount {
+
+  // Method override dari parent class BankAccount, penerapan konsep Polymorphism dalam oop
+  withdraw(amount) {
+    return new Promise((resolve, reject) => {
+      const kurang = parseFloat(amount);
+      if (!isNaN(kurang) && kurang > 0) {
+        if (kurang <= this._saldo) {
+          setTimeout(() => {
+            this._saldo -= kurang;
+            resolve(`Saldo berhasil ditarik. Saldo saat ini: Rp${this._checkBalance()}`);
+          }, 2000); // Delay 2 detik
+        } else {
+          reject("Saldo tidak mencukupi.");
+        }
+      } else {
+        reject("Masukkan jumlah yang valid.");
+      }
+    });
+  }
+}
+
+module.exports = { RegularAccount, PremiumAccount };
