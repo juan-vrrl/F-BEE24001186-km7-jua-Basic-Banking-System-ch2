@@ -31,7 +31,7 @@ Berikut adalah flowchart yang menggambarkan alur dari program:
    - Pengguna dapat memilih antara dua opsi jenis akun:
      - **1. Akun Regular**: Memiliki batas penarikan maksimum (Rp100.000).
      - **2. Akun Premium**: Tidak memiliki batas penarikan.
-    - *Jika pengguna menginputkan selain dari pilihan diatas maka dianggap tidak valid dan akan kembali ke awal program. 
+     - Jika pengguna menginputkan selain dari pilihan diatas maka dianggap tidak valid dan akan kembali ke awal program. 
 
 ### 3. **Pembuatan Akun**
    - Berdasarkan pilihan pengguna, objek **RegularAccount** atau **PremiumAccount** dibuat.
@@ -42,7 +42,7 @@ Berikut adalah flowchart yang menggambarkan alur dari program:
      1. Menambah saldo (deposit).
      2. Menarik saldo (withdraw).
      3. Keluar dari program.
-    - *Jika pengguna menginputkan selain dari pilihan diatas maka dianggap tidak valid dan akan kembali ke pilihan menu utama.
+     - Jika pengguna menginputkan selain dari pilihan diatas maka dianggap tidak valid dan akan kembali ke pilihan menu utama.
 
 ### 5. **Tambah Saldo (Deposit)**
    - Jika pengguna memilih opsi untuk menambah saldo, sistem akan meminta jumlah yang ingin ditambah ke saldo. Sistem akan memeriksa apakan inputan merupakan angka dan lebih dari 0, jika tidak valid maka akan dikembalikan ke menu utama. Jika valid, sistem akan delay selama 3 detik sebelum menampilkan pesan saldo berhasil ditambah sebanyak jumlah yang diinputkan pengguna.
