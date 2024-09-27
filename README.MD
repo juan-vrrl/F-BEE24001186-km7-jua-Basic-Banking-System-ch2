@@ -48,7 +48,7 @@ Berikut adalah flowchart yang menggambarkan alur dari program:
    - Jika pengguna memilih opsi untuk menambah saldo, sistem akan meminta jumlah yang ingin ditambah ke saldo. Sistem akan memeriksa apakan inputan merupakan angka dan lebih dari 0, jika tidak valid maka akan dikembalikan ke menu utama. Jika valid, sistem akan delay selama 3 detik sebelum menampilkan pesan saldo berhasil ditambah sebanyak jumlah yang diinputkan pengguna.
 
 ### 6. **Tarik Saldo (Withdraw)**
-   - Jika pengguna memilih opsi untuk menarik saldo, sistem akan memeriksa apakah inputan merupakan angka, inputan lebih dari 0, dan saldo mencukupi. Untuk akun regular, terdapat batasan penarikan Rp100.000, sedangkan akun premium dapat menarik saldo tanpa batasan, asalkan inputan merupakan angka, inputan lebih dari 0, dan saldo mencukupi. Jika valid, sistem akan delay selama 3 detik sebelum menampilkan pesan saldo telah berkurang sebanyak jumlah yang diinputkan pengguna.
+   - Jika pengguna memilih opsi untuk menarik saldo, sistem akan memeriksa apakah inputan merupakan angka, inputan lebih dari 0, dan saldo mencukupi. Untuk akun regular, terdapat batasan penarikan Rp100.000, sedangkan akun premium dapat menarik saldo tanpa batasan, asalkan inputan merupakan angka, inputan lebih dari 0, dan saldo mencukupi. Jika tidak valid maka akan dikembalikan ke menu utama, sedangkan jika valid, sistem akan delay selama 3 detik sebelum menampilkan pesan saldo telah berkurang sebanyak jumlah yang diinputkan pengguna.
 
 ### 7. **Keluar Program**
    - Jika pengguna memilih untuk keluar, program akan mengakhiri sesi dan menampilkan pesan terima kasih.
