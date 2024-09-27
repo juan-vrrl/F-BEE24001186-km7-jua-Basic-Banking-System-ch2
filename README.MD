@@ -35,9 +35,9 @@ Berikut adalah flowchart yang menggambarkan alur dari program:
 
 ### 3. **Pembuatan Akun**
    - Berdasarkan pilihan pengguna, objek **RegularAccount** atau **PremiumAccount** dibuat.
-   - Sistem kemudian menampilkan saldo awal dari akun yang baru dibuat.
 
 ### 4. **Menu Utama**
+   - Sistem menampilkan saldo akun saat ini.
    - Pengguna diberikan pilihan menu utama dengan tiga opsi:
      1. Menambah saldo (deposit).
      2. Menarik saldo (withdraw).
