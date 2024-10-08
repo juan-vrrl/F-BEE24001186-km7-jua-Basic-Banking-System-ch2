@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS nasabah (
     alamat VARCHAR(100) NOT NULL
 );
 
+CREATE INDEX idx_nasabah_id ON nasabah(nasabah_id);
+
 DROP TABLE IF EXISTS nasabah;
 
 -- Akun
@@ -20,6 +22,12 @@ CREATE TABLE IF NOT EXISTS akun (
     tipe akun_jenis NOT NULL,
     FOREIGN KEY (nasabah_id) REFERENCES nasabah (nasabah_id)
 );
+
+CREATE INDEX idx_akun_nasabah_id ON akun(nasabah_id);
+
+CREATE INDEX idx_akun_id ON akun(akun_id);
+
+CREATE INDEX idx_akun_tipe ON akun(tipe);
 
 DROP TABLE IF EXISTS akun;
 
@@ -32,5 +40,7 @@ CREATE TABLE IF NOT EXISTS transaksi (
     jenis transaksi_jenis NOT NULL,
     FOREIGN KEY (akun_id) REFERENCES akun (akun_id)
 );
+
+CREATE INDEX idx_transaksi_akun_id ON transaksi(akun_id);
 
 DROP TABLE IF EXISTS transaksi;
